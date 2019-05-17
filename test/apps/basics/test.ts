@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as http from 'http';
-import { build } from '../../../api';
-import { AppRunner } from '../AppRunner';
+import {build} from '../../../api';
+import {AppRunner} from '../AppRunner';
 
 declare let deleted: { id: number };
 declare let el: any;
@@ -27,13 +27,13 @@ function get(url: string, opts: http.RequestOptions = {}): Promise<Response> {
 	});
 }
 
-describe('basics', function() {
+describe('basics', function () {
 	this.timeout(10000);
 
 	let r: AppRunner;
 
 	// hooks
-	before('build app', () => build({ cwd: __dirname }));
+	before('build app', () => build({cwd: __dirname}));
 	before('start runner', async () => {
 		r = await new AppRunner().start(__dirname);
 	});
@@ -127,7 +127,7 @@ describe('basics', function() {
 
 	// TODO equivalent test for a webpack app
 	it('sets Content-Type, Link...modulepreload, and Cache-Control headers', async () => {
-		const { headers } = await get(r.base);
+		const {headers} = await get(r.base);
 
 		assert.equal(
 			headers['content-type'],
@@ -267,7 +267,6 @@ describe('basics', function() {
 		await r.sapper.start();
 
 		assert.equal(await r.text('h1'), 'foo');
-
 		await r.page.click('[href="dirs/bar"]');
 		await r.wait();
 		assert.equal(await r.text('h1'), 'bar');
@@ -278,11 +277,26 @@ describe('basics', function() {
 		await r.sapper.start();
 
 		assert.equal(await r.text('h1'), 'abc,xyz');
-
+		await r.page.click('[href="xyz/abc/def/ghi"]');
+		await r.wait();
+		assert.equal(await r.text('h1'), 'xyz,abc,def,ghi');
+		assert.equal(await r.text('h2'), 'xyz,abc,def,ghi');
+		await r.page.click('[href="xyz/abc/def"]');
+		await r.wait();
+		assert.equal(await r.text('h1'), 'xyz,abc,def');
+		assert.equal(await r.text('h2'), 'xyz,abc,def');
+		await r.page.click('[href="xyz/abc/def"]');
+		await r.wait();
+		assert.equal(await r.text('h1'), 'xyz,abc,def');
+		assert.equal(await r.text('h2'), 'xyz,abc,def');
+		await r.page.click('[href="xyz/abc"]');
+		await r.wait();
+		assert.equal(await r.text('h1'), 'xyz,abc');
+		assert.equal(await r.text('h2'), 'xyz,abc');
 		await r.page.click('[href="xyz/abc/deep"]');
 		await r.wait();
 		assert.equal(await r.text('h1'), 'xyz,abc');
-
+		assert.equal(await r.text('h2'), 'xyz,abc');
 		await r.page.click('[href="xyz/abc/qwe/deep.json"]');
 		await r.wait();
 		assert.equal(
