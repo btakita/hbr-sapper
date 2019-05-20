@@ -6,7 +6,4 @@ cypress/screenshots
 __sapper__
 sapper
 runtime.js
-dist
 !rollup.config.js
-/runtime/app.mjs
-/runtime/server.mjs
