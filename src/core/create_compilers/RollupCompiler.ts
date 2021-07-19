@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { access, constants } from 'fs/promise';
 import color from 'kleur';
 import relative from 'require-relative';
 import { dependenciesForTree, DependencyTreeOptions } from 'rollup-dependency-tree';
@@ -401,7 +402,14 @@ export default class RollupCompiler {
 	static async load_config(cwd: string) {
 		if (!rollup) rollup = relative('rollup', cwd);
 
-		const input = path.resolve(cwd, 'rollup.config.js');
+		let input: string;
+		try {
+		  input = path.resolve(cwd, 'rollup.config.mjs');
+			await access(input, constants.F_OK | constants.R_OK);
+		} catch (_e) {
+		  input = path.resolve(cwd, 'rollup.config.js');
+			await access(input, constants.F_OK | constants.R_OK);
+    }
 
 		const bundle = await rollup.rollup({
 			input,

@@ -3,8 +3,8 @@ import * as fs from 'fs';
 export default function validate_bundler(bundler?: 'rollup' | 'webpack') {
 	if (!bundler) {
 		bundler = (
-			fs.existsSync('rollup.config.js') || fs.existsSync('rollup.config.ts') ? 'rollup' :
-				fs.existsSync('webpack.config.js') || fs.existsSync('webpack.config.ts') ? 'webpack' : null
+			fs.existsSync('rollup.config.js') || fs.existsSync('rollup.config.mjs') || fs.existsSync('rollup.config.ts') ? 'rollup' :
+				fs.existsSync('webpack.config.js') || fs.existsSync('webpack.config.mjs') || fs.existsSync('webpack.config.ts') ? 'webpack' : null
 		);
 
 		if (!bundler) {
