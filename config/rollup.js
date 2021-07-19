@@ -1,1 +1,2 @@
-module.exports = require('../dist/rollup.js');
+import { default as rollup } from '../dist/config/rollup.js';
+export default rollup;

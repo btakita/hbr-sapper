@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { SourceMapConsumer, RawSourceMap } from 'source-map';
+import * as source_map from 'source-map';
+import type { RawSourceMap } from 'source-map';
+import { replace_async } from './replace_async';
+export const { SourceMapConsumer } = source_map;
 
 function get_sourcemap_url(contents: string) {
 	const reversed = contents
@@ -30,11 +33,11 @@ function get_file_contents(file_path: string) {
 	}
 }
 
-export function sourcemap_stacktrace(stack: string) {
-	const replace = (line: string) =>
-		line.replace(
+export async function sourcemap_stacktrace(stack: string) {
+	const replace = async (line: string) =>
+		await replace_async(line,
 			/^ {4}at (?:(.+?)\s+\()?(?:(.+?):(\d+)(?::(\d+))?)\)?/,
-			(input, var_name, file_path, line_num, column) => {
+			async (input, var_name, file_path, line_num, column) => {
 				if (!file_path) return input;
 
 				const contents = get_file_contents(file_path);
@@ -70,7 +73,7 @@ export function sourcemap_stacktrace(stack: string) {
 					return input;
 				}
 
-				const consumer = new SourceMapConsumer(raw_sourcemap);
+				const consumer = await (new SourceMapConsumer(raw_sourcemap));
 				const pos = consumer.originalPositionFor({
 					line: Number(line_num),
 					column: Number(column),
@@ -89,8 +92,5 @@ export function sourcemap_stacktrace(stack: string) {
 
 	file_cache.clear();
 
-	return stack
-		.split('\n')
-		.map(replace)
-		.join('\n');
+	return (await Promise.all(stack.split('\n').map(replace))).join('\n');
 }

@@ -1,8 +1,8 @@
-import { hydrate_target } from '../app';
-import { select_target } from '../router';
-import find_anchor from '../router/find_anchor';
-import { HydratedTarget, Target } from '../types';
-import { get_base_uri } from '../baseuri_helper';
+import { hydrate_target } from '../app.js';
+import { select_target } from '../router/index.js';
+import find_anchor from '../router/find_anchor.js';
+import { HydratedTarget, Target } from '../types.js';
+import { get_base_uri } from '../baseuri_helper.js';
 
 let prefetching: {
 	href: string;

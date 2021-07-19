@@ -1,7 +1,8 @@
 import { writable } from 'svelte/store';
 import fs from 'fs';
 import path from 'path';
-import { parse } from 'cookie';
+import * as cookie from 'cookie';
+const { parse } = cookie;
 import devalue from 'devalue';
 import fetch from 'node-fetch';
 import URL from 'url';
@@ -259,7 +260,7 @@ export function get_page_handler(
 			});
 
 			if (error instanceof Error && error.stack) {
-				error.stack = sourcemap_stacktrace(error.stack);
+				error.stack = await sourcemap_stacktrace(error.stack);
 			}
 
 			const pageContext: PageContext = {

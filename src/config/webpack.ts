@@ -1,4 +1,4 @@
-import { dev, src, dest } from './env';
+import { dev, src, dest } from './env.js';
 
 export default {
 	dev,

@@ -1,5 +1,5 @@
 import * as child_process from 'child_process';
-import { CompileResult } from './core/create_compilers/interfaces';
+import { CompileResult } from './core/create_compilers/interfaces.js';
 
 export type Route = {
 	id: string;

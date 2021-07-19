@@ -11,16 +11,15 @@
 		"importHelpers": true,
 		"target": "ES2020",
 		"module": "esnext",
-		"baseUrl": ".",
-		"rootDir": ".",
-		"outDir": ".",
+		"baseUrl": "src",
+		"rootDir": "src",
+		"outDir": "dist",
 		"paths": {
 			"@sapper/*": ["runtime/src/*"]
 		}
 	},
 	"include": [
 		"src",
-		"runtime"
 	],
 	"exclude": [
 		"node_modules"

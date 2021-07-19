@@ -5,13 +5,13 @@ import {
 	init as init_router,
 	load_current_page,
 	select_target
-} from './router';
-import { get_prefetched, start as start_prefetching } from './prefetch';
+} from './router/index.js';
+import { get_prefetched, start as start_prefetching } from './prefetch/index.js';
 import {
 	ErrorComponent,
 	components,
 	root_comp
-} from '@sapper/internal/manifest-client';
+} from '@sapper/internal/manifest-client.js';
 import {
 	HydratedTarget,
 	Target,
@@ -19,10 +19,10 @@ import {
 	Branch,
 	Page,
 	InitialData
-} from './types';
+} from './types.js';
 import { PageContext } from '@sapper/common';
-import goto from './goto';
-import { page_store } from './stores';
+import goto from './goto/index.js';
+import { page_store } from './stores/index.js';
 
 declare const __SAPPER__;
 export const initial_data: InitialData = typeof __SAPPER__ !== 'undefined' && __SAPPER__;

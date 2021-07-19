@@ -1,6 +1,6 @@
-import format_messages from 'webpack-format-messages';
-import { CompileResult, BuildInfo, CompileError, Chunk } from './interfaces';
-import { ManifestData, Dirs } from '../../interfaces';
+import { default as format_messages } from 'webpack-format-messages';
+import { CompileResult, BuildInfo, CompileError, Chunk } from './interfaces.js';
+import { ManifestData, Dirs } from '../../interfaces.js';
 
 const locPattern = /\((\d+):(\d+)\)$/;
 

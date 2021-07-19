@@ -5,13 +5,13 @@ import * as urllib from 'url';
 import { promisify } from 'util';
 import fetch from 'node-fetch';
 import * as ports from 'port-authority';
-import { exportQueue, FetchOpts, FetchRet } from './utils/export_queue';
-import clean_html from './utils/clean_html';
-import minify_html from './utils/minify_html';
-import Deferred from './utils/Deferred';
-import { noop } from './utils/noop';
+import { exportQueue, FetchOpts, FetchRet } from './utils/export_queue.js';
+import clean_html from './utils/clean_html.js';
+import minify_html from './utils/minify_html.js';
+import Deferred from './utils/Deferred.js';
+import { noop } from './utils/noop.js';
 import { parse as parseLinkHeader } from 'http-link-header';
-import { rimraf, copy, mkdirp } from './utils/fs_utils';
+import { rimraf, copy, mkdirp } from './utils/fs_utils.js';
 
 const writeFile = promisify(fs.writeFile);
 
@@ -157,7 +157,7 @@ async function _export({
 			}
 		}
 
-		const buffer = Buffer.from(body);
+		const buffer = typeof body === 'string' ? Buffer.from(body) : body;
 
 		onfile({
 			file,
@@ -169,7 +169,7 @@ async function _export({
 		if (fs.existsSync(export_file)) return;
 		mkdirp(path.dirname(export_file));
 
-		return writeFile(export_file, buffer);
+		return writeFile(export_file, new Uint8Array(buffer));
 	}
 
 	function handle(url: URL, fetchOpts: FetchOpts, addCallback: (url: URL) => void) {
@@ -301,7 +301,7 @@ async function _export({
 		}
 	});
 
-	proc.on('message', message => {
+	proc.on('message', (message: ExportMessage) => {
 		if (!message.__sapper__ || message.event !== 'file') return;
 		queue.addSave(save(message.url, message.status, message.type, message.body));
 	});
@@ -334,4 +334,13 @@ async function _export({
 			rej(err);
 		});
 	});
+}
+
+interface ExportMessage {
+	__sapper__: boolean;
+	event: string;
+	url: string;
+	status: number;
+	type: string;
+	body: string | ArrayBuffer;
 }

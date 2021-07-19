@@ -3,6 +3,8 @@
 /test/**/node_modules
 __sapper__
 dist
+/runtime/app.js
 /runtime/app.mjs
+/runtime/server.js
 /runtime/server.mjs
 /.vscode/settings.json

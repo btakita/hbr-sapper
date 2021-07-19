@@ -1,4 +1,4 @@
-let source;
+let source: EventSource;
 
 function check() {
 	if (typeof module === 'undefined') return;
@@ -44,4 +44,17 @@ export function connect(port) {
 	window.addEventListener('beforeunload', function() {
 		source.close();
 	});
+}
+
+declare global {
+	interface NodeModule {
+		hot: {
+			status(): string;
+			check(b: boolean): Promise<NodeModule[]>;
+		};
+	}
+
+	interface Window {
+		source: EventSource;
+	}
 }

@@ -1,4 +1,4 @@
-import { components, routes } from '@sapper/internal/manifest-client';
+import { components, routes } from '@sapper/internal/manifest-client.js';
 
 export default function prefetchRoutes(pathnames: string[]): Promise<void> {
 	return routes

@@ -1,22 +1,29 @@
-import * as fs from 'fs';
+import { readFile, writeFile } from 'fs/promises';
 import * as path from 'path';
-import { mkdirp } from './fs_utils';
+import { mkdirp } from './fs_utils.js';
 
-const runtime = [
-	'index.d.ts',
-	'app.mjs',
-	'server.mjs',
-	'internal/shared.mjs',
-	'internal/layout.svelte',
-	'internal/error.svelte'
-].map(file => ({
-	file,
-	source: fs.readFileSync(path.join(__dirname, `../runtime/${file}`), 'utf-8')
-}));
+const runtime = await Promise.all(
+	[
+		'index.d.ts',
+		'app.js',
+		'server.js',
+		'internal/shared.js',
+		'internal/layout.svelte',
+		'internal/error.svelte'
+	].map(async file => ({
+		file,
+		source: await readFile(
+			path.join(path.dirname(new URL(import.meta.url).pathname), `../../../runtime/${file}`),
+			'utf-8'
+		)
+	}))
+);
 
-export function copy_runtime(output: string) {
-	runtime.forEach(({ file, source }) => {
-		mkdirp(path.dirname(`${output}/${file}`));
-		fs.writeFileSync(`${output}/${file}`, source);
-	});
+export async function copy_runtime(output: string) {
+	await Promise.all(
+		runtime.map(async ({ file, source }) => {
+			mkdirp(path.dirname(`${output}/${file}`));
+			await writeFile(`${output}/${file}`, source);
+		})
+	);
 }

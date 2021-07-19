@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Page, PageComponent, ServerRoute, ManifestData } from '../interfaces';
-import { posixify, reserved_words } from '../utils';
+import { Page, PageComponent, ServerRoute, ManifestData } from '../interfaces.js';
+import { posixify, reserved_words } from '../utils.js';
 
 export default function create_manifest_data(cwd: string, extensions = '.svelte .html'): ManifestData {
 

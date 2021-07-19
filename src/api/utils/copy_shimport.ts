@@ -1,9 +1,17 @@
-import * as fs from 'fs';
-import { version as shimport_version } from 'shimport/package.json';
+import { readFileSync } from 'fs';
+import { readFile, writeFile } from 'fs/promises'
+import { resolve } from 'import-meta-resolve'
+const shimport_version = JSON.parse(
+	(await readFile(
+		new URL(await resolve('shimport/package.json', import.meta.url)).pathname
+	)).toString()
+).version;
 
-export function copy_shimport(dest: string) {
-	fs.writeFileSync(
+export async function copy_shimport(dest: string) {
+	await writeFile(
 		`${dest}/client/shimport@${shimport_version}.js`,
-		fs.readFileSync(require.resolve('shimport/index.js'))
+		readFileSync(
+			new URL(await resolve('shimport/index.js', import.meta.url)).pathname
+		)
 	);
 }
