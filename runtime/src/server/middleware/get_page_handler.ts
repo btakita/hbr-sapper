@@ -259,7 +259,7 @@ export function get_page_handler(
 			});
 
 			if (error instanceof Error && error.stack) {
-				error.stack = sourcemap_stacktrace(error.stack);
+				error.stack = await sourcemap_stacktrace(error.stack);
 			}
 
 			const pageContext: PageContext = {

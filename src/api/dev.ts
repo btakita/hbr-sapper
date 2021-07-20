@@ -290,7 +290,7 @@ class Watcher extends EventEmitter {
 							this.emit('stderr', chunk);
 						});
 
-						this.proc.on('message', message => {
+						this.proc.on('message', (message: ExportMessage) => {
 							if (message.__sapper__ && message.event === 'basepath') {
 								this.emit('basepath', {
 									basepath: message.basepath
@@ -509,4 +509,10 @@ function watch_dir(
 			closed = true;
 		}
 	};
+}
+
+interface ExportMessage {
+	__sapper__: boolean;
+	event: string;
+	basepath: string;
 }

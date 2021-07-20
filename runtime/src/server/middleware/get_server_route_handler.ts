@@ -24,6 +24,7 @@ export function get_server_route_handler(routes: ServerRoute[]) {
 				res.setHeader = function(name: string, value: string) {
 					headers[name.toLowerCase()] = value;
 					setHeader.apply(res, [name, value]);
+					return res;
 				};
 
 				res.end = function(chunk?: any) {
