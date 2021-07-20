@@ -4,6 +4,7 @@ import * as http from 'http';
 import * as child_process from 'child_process';
 import * as ports from 'port-authority';
 import { EventEmitter } from 'events';
+import CheapWatch from 'cheap-watch';
 import { create_manifest_data, create_app, create_compilers, create_serviceworker_manifest } from '../core';
 import { Compiler, Compilers } from '../core/create_compilers';
 import { CompileResult } from '../core/create_compilers/interfaces';
@@ -493,17 +494,14 @@ function watch_dir(
 	let watch: any;
 	let closed = false;
 
-	import('cheap-watch').then(({ default: CheapWatch }) => {
-		if (closed) return;
+	if (closed) return;
+	watch = new CheapWatch({ dir, filter, debounce: 50 }) as CheapWatch;
 
-		watch = new CheapWatch({ dir, filter, debounce: 50 });
+	watch.on('+', callback);
 
-		watch.on('+', callback);
+	watch.on('-', callback);
 
-		watch.on('-', callback);
-
-		watch.init();
-	});
+	watch.init();
 
 	return {
 		close: () => {

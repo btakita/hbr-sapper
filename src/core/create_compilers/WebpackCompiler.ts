@@ -13,7 +13,7 @@ export class WebpackCompiler {
 	}
 
 	oninvalid(cb: (filename: string) => void) {
-		this._.hooks.invalid.tap('sapper', cb);
+		this._.hooks.invalid.tap('sapper.js', cb);
 	}
 
 	compile(): Promise<CompileResult> {

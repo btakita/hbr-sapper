@@ -1,1 +1,2 @@
-module.exports = require('../dist/webpack.js');
+export { default as webpack } from '../dist/webpack.js';
+export default webpack;

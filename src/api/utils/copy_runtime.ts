@@ -11,7 +11,10 @@ const runtime = [
 	'internal/error.svelte'
 ].map(file => ({
 	file,
-	source: fs.readFileSync(path.join(__dirname, `../runtime/${file}`), 'utf-8')
+	source: fs.readFileSync(
+		path.join(path.dirname(new URL(import.meta.url).pathname), `../runtime/${file}`),
+		'utf-8'
+	)
 }));
 
 export function copy_runtime(output: string) {

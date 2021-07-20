@@ -1,5 +1,4 @@
 import * as path from 'path';
-import { access, constants } from 'fs/promise';
 import color from 'kleur';
 import relative from 'require-relative';
 import { dependenciesForTree, DependencyTreeOptions } from 'rollup-dependency-tree';
@@ -15,6 +14,7 @@ import {
 } from 'rollup';
 import { CompileResult } from './interfaces';
 import RollupResult from './RollupResult';
+import { get_config_extname } from './config_extname.js';
 
 const stderr = console.error.bind(console);
 const INJECT_STYLES_NAME = 'inject_styles';
@@ -22,7 +22,7 @@ const INJECT_STYLES_ID = 'inject_styles.js';
 
 let rollup: any;
 
-function printTimings(timings: {[event: string]: [number, number, number]}) {
+function printTimings(timings:{ [event: string]: [number, number, number] }) {
 	for (const [key, info] of Object.entries(timings)) {
 		console.info(`${key} took ${info[0].toFixed(0)}ms`);
 	}
@@ -118,6 +118,7 @@ export default class RollupCompiler {
 	css_files: Record<string, string>;
 	dependencies: Record<string, string[]>;
 	routes: string;
+	esm: boolean;
 
 	constructor(config: any, routes: string) {
 		this._ = this.get_config(config);
@@ -354,7 +355,7 @@ export default class RollupCompiler {
 			this.warnings = [];
 			this.errors = [];
 			this._oninvalid(id);
-		});
+		})
 
 		watcher.on('event', (event: any) => {
 			switch (event.code) {
@@ -396,23 +397,26 @@ export default class RollupCompiler {
 				default:
 					console.log(`Unexpected event ${event.code}`);
 			}
-		});
+		})
 	}
 
 	static async load_config(cwd: string) {
 		if (!rollup) rollup = relative('rollup', cwd);
 
-		let input: string;
-		try {
-		  input = path.resolve(cwd, 'rollup.config.mjs');
-			await access(input, constants.F_OK | constants.R_OK);
-		} catch (_e) {
-		  input = path.resolve(cwd, 'rollup.config.js');
-			await access(input, constants.F_OK | constants.R_OK);
-    }
-
+		let input: string, format: string, esm: boolean;
+		const config_extname = await get_config_extname(cwd);
+		if (config_extname === '.cjs') {
+			input = path.resolve(cwd, 'rollup.config.js');
+			format = 'cjs';
+			esm = false;
+		} else if (config_extname === '.mjs') {
+			input = path.resolve(cwd, 'rollup.config.mjs');
+			format = 'es';
+			esm = true;
+		}
 		const bundle = await rollup.rollup({
 			input,
+			format,
 			inlineDynamicImports: true,
 			external: (id: string) => {
 				return (id[0] !== '.' && !path.isAbsolute(id)) || id.slice(-5, id.length) === '.json';
@@ -423,26 +427,30 @@ export default class RollupCompiler {
 			output: [{ code }]
 		} = await bundle.generate({
 			exports: 'named',
-			format: 'cjs'
+			format
 		});
 
-		// temporarily override require
-		const defaultLoader = require.extensions['.js'];
-		require.extensions['.js'] = (module: any, filename: string) => {
-			if (filename === input) {
-				module._compile(code, filename);
-			} else {
-				defaultLoader(module, filename);
+		if (!esm) {
+			// temporarily override require
+			const defaultLoader = require.extensions['.js'];
+			require.extensions['.js'] = (module: any, filename: string) => {
+				if (filename === input) {
+					module._compile(code, filename);
+				} else {
+					defaultLoader(module, filename);
+				}
 			}
-		};
+		}
 
-		const config: any = require(input).default; // eslint-disable-line
-		delete require.cache[input];
-
-		return config;
+		if (esm) {
+			return (await import(input)).default;
+		} else {
+			const config = require(input).default;
+			delete require.cache[input];
+			return config;
+		}
 	}
 }
-
 
 // copied from https://github.com/rollup/rollup/blob/master/cli/logging.ts
 // and updated so that it will compile here
@@ -452,8 +460,8 @@ export function handleError(err: RollupError, recover = false) {
 	if (err.name) description = `${err.name}: ${description}`;
 	const message =
 		(err.plugin
-			? `(plugin ${(err).plugin}) ${description}`
-			: description) || err;
+		 ? `(plugin ${(err).plugin}) ${description}`
+		 : description) || err;
 
 	stderr(color.bold().red(`[!] ${color.bold(message.toString())}`));
 

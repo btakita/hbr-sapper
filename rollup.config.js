@@ -52,10 +52,11 @@ export default [
 		],
 		output: {
 			dir: 'dist',
-			format: 'cjs',
+			format: 'es',
 			interop: false,
 			sourcemap: true,
-			chunkFileNames: '[name].js'
+			chunkFileNames: '[name].js',
+			exports: 'auto'
 		},
 		external,
 		plugins: [

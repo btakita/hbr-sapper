@@ -1,5 +1,7 @@
-import { dev, src, dest } from './env';
+import { accessSync, constants } from 'fs';
 import { InputOption, OutputOptions } from 'rollup';
+import { dev, src, dest } from './env';
+import path from 'path';
 
 const sourcemap = dev ? 'inline' : false;
 
@@ -35,7 +37,7 @@ export default {
 		output: (): OutputOptions => {
 			return {
 				dir: `${dest}/server`,
-				format: 'cjs',
+				format: get_server_format(),
 				sourcemap
 			};
 		}
@@ -55,3 +57,15 @@ export default {
 		}
 	}
 };
+function get_server_format() {
+	const cwd = '.'
+  try {
+    const input = path.resolve(cwd, 'rollup.config.mjs')
+    accessSync(input, constants.F_OK | constants.R_OK)
+    return 'es'
+  } catch (_e) {
+    const input = path.resolve(cwd, 'rollup.config.js')
+    accessSync(input, constants.F_OK | constants.R_OK)
+    return 'cjs'
+  }
+}

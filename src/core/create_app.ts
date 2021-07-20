@@ -148,7 +148,7 @@ function generate_client_manifest(
 		export const routes = ${routes};
 
 		${dev ? `if (typeof window !== 'undefined') {
-			import(${stringify(posixify(path.resolve(__dirname, '../sapper-dev-client.js')))}).then(client => {
+			import(${stringify(posixify(path.resolve(path.dirname(new URL(import.meta.url).pathname), '../sapper-dev-client.js')))}).then(client => {
 				client.connect(${dev_port});
 			});
 		}` : ''}

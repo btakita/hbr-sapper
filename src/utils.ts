@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { constants } from 'fs'
 
 export function left_pad(str: string, len: number) {
 	while (str.length < len) str = ` ${str}`;
