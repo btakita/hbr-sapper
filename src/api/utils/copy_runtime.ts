@@ -7,7 +7,7 @@ const runtime = await Promise.all(
 		'index.d.ts',
 		'app.js',
 		'server.js',
-		'internal/shared.mjs',
+		'internal/shared.js',
 		'internal/layout.svelte',
 		'internal/error.svelte'
 	].map(async file => ({
