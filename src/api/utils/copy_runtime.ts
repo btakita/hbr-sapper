@@ -5,8 +5,8 @@ import { mkdirp } from './fs_utils.js';
 const runtime = await Promise.all(
 	[
 		'index.d.ts',
-		'app.mjs',
-		'server.mjs',
+		'app.js',
+		'server.js',
 		'internal/shared.mjs',
 		'internal/layout.svelte',
 		'internal/error.svelte'
