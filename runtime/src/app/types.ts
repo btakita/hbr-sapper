@@ -1,4 +1,4 @@
-import { DOMComponentConstructor, Route } from '@sapper/internal/manifest-client';
+import { DOMComponentConstructor, Route } from '@sapper/internal/manifest-client.js';
 
 export interface HydratedTarget {
 	redirect?: Redirect;

@@ -1,5 +1,5 @@
-import { cid, history, navigate, select_target } from '../router';
-import { get_base_uri } from '../baseuri_helper';
+import { cid, history, navigate, select_target } from '../router/index.js';
+import { get_base_uri } from '../baseuri_helper.js';
 
 export default function goto(
 	href: string,

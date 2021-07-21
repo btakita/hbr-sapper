@@ -1,4 +1,4 @@
-import { ManifestData, Dirs } from '../../interfaces';
+import { ManifestData, Dirs } from '../../interfaces.js';
 
 export type Chunk = {
 	file: string;

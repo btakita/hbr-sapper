@@ -1,4 +1,4 @@
-import { create_manifest_data } from '../core';
+import { create_manifest_data } from '../core.js';
 
 export function find_page(pathname: string, cwd = 'src/routes') {
 	const { pages } = create_manifest_data(cwd);

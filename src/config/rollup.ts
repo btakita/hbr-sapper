@@ -1,7 +1,7 @@
 import { accessSync, constants } from 'fs';
 import { InputOption, OutputOptions } from 'rollup';
-import { dev, src, dest } from './env';
 import path from 'path';
+import { dev, src, dest } from './env.js';
 
 const sourcemap = dev ? 'inline' : false;
 

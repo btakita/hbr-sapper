@@ -1,14 +1,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import minify_html from './utils/minify_html';
-import { create_compilers, create_app, create_manifest_data, create_serviceworker_manifest } from '../core';
-import { copy_shimport } from './utils/copy_shimport';
-import read_template from '../core/read_template';
-import { CompileResult } from '../core/create_compilers/interfaces';
-import { noop } from './utils/noop';
-import validate_bundler from './utils/validate_bundler';
-import { copy_runtime } from './utils/copy_runtime';
-import { rimraf, mkdirp } from './utils/fs_utils';
+import minify_html from './utils/minify_html.js';
+import { create_compilers, create_app, create_manifest_data, create_serviceworker_manifest } from '../core.js';
+import { copy_shimport } from './utils/copy_shimport.js';
+import read_template from '../core/read_template.js';
+import { CompileResult } from '../core/create_compilers/interfaces.js';
+import { noop } from './utils/noop.js';
+import validate_bundler from './utils/validate_bundler.js';
+import { copy_runtime } from './utils/copy_runtime.js';
+import { rimraf, mkdirp } from './utils/fs_utils.js';
 
 type Opts = {
 	cwd?: string;
@@ -51,11 +51,11 @@ export async function build({
 
 	rimraf(output);
 	mkdirp(output);
-	copy_runtime(output);
+	await copy_runtime(output);
 
 	rimraf(dest);
 	mkdirp(`${dest}/client`);
-	copy_shimport(dest);
+	await copy_shimport(dest);
 
 	// minify src/template.html
 	// TODO compile this to a function? could be quicker than str.replace(...).replace(...).replace(...)

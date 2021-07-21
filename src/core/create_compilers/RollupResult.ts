@@ -1,11 +1,17 @@
+import { readFile } from 'fs/promises';
 import * as path from 'path';
 import colors from 'kleur';
 import pb from 'pretty-bytes';
-import RollupCompiler from './RollupCompiler';
-import { left_pad, normalize_path } from '../../utils';
-import { CompileResult, BuildInfo, CompileError, Chunk } from './interfaces';
-import { ManifestData, Dirs } from '../../interfaces';
-import { version as shimport_version} from 'shimport/package.json';
+import { resolve } from 'import-meta-resolve';
+import { left_pad, normalize_path } from '../../utils.js';
+import { ManifestData, Dirs } from '../../interfaces.js';
+import RollupCompiler from './RollupCompiler.js';
+import { CompileResult, BuildInfo, CompileError, Chunk } from './interfaces.js';
+const shimport_version = JSON.parse(
+	(await readFile(
+		new URL(await resolve('shimport/package.json', import.meta.url)).pathname
+	)).toString()
+).version
 
 export default class RollupResult implements CompileResult {
 	duration: number;
@@ -13,7 +19,7 @@ export default class RollupResult implements CompileResult {
 	warnings: CompileError[];
 	chunks: Chunk[];
 	assets: Record<string, string>;
-	css: {	
+	css: {
 		main: string[];
 	};
 	dependencies: Record<string, string[]>;

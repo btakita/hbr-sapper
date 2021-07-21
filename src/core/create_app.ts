@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { posixify, stringify, walk, write_if_changed } from '../utils';
-import { Page, PageComponent, ManifestData } from '../interfaces';
+import { posixify, stringify, walk, write_if_changed } from '../utils.js';
+import { Page, PageComponent, ManifestData } from '../interfaces.js';
 
 export function create_app({
 	bundler,
@@ -33,8 +33,8 @@ export function create_app({
 
 	const app = generate_app(manifest_data, path_to_routes);
 
-	write_if_changed(`${output}/internal/manifest-client.mjs`, client_manifest);
-	write_if_changed(`${output}/internal/manifest-server.mjs`, server_manifest);
+	write_if_changed(`${output}/internal/manifest-client.js`, client_manifest);
+	write_if_changed(`${output}/internal/manifest-server.js`, server_manifest);
 	write_if_changed(`${output}/internal/App.svelte`, app);
 }
 

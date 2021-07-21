@@ -6,6 +6,17 @@
     "sapper": "./dist/cli.js"
   },
   "type": "module",
+  "exports": {
+    "./package.json": {
+      "import": "./package.json"
+    },
+    "./config/rollup.js": {
+      "import": "./config/rollup.js"
+    },
+    "./config/webpack.js": {
+      "import": "./config/webpack.js"
+    }
+  },
   "files": [
     "*.js",
     "webpack",
@@ -35,7 +46,7 @@
     "@sveltejs/eslint-config": "github:sveltejs/eslint-config#v5.4.0",
     "@types/cookie": "^0.4.1",
     "@types/mocha": "^8.2.3",
-    "@types/node": "^16.3.3",
+    "@types/node": "^16.4.0",
     "@types/node-fetch": "^2.5.11",
     "@types/puppeteer": "^5.4.4",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
@@ -48,7 +59,7 @@
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-svelte3": "^3.2.0",
-    "import-meta-resolve": "^1.1.1",
+    "import-meta-resolve": "workspace:^1.1.1",
     "kleur": "^4.1.4",
     "mime": "^2.5.2",
     "mocha": "^9.0.2",
@@ -56,16 +67,14 @@
     "npm-run-all": "^4.1.5",
     "polka": "^0.5.2",
     "port-authority": "^1.1.2",
-    "pretty-bytes": "^5.6.0",
+    "pretty-bytes": "workspace:^5.6.0",
     "puppeteer": "^10.1.0",
-    "require-relative": "^0.8.7",
     "rimraf": "^3.0.2",
-    "rollup": "^2.53.2",
-    "rollup-dependency-tree": "0.0.14",
-    "rollup-plugin-css-chunks": "^2.0.3",
+    "rollup": "^2.53.3",
+    "rollup-plugin-css-chunks": "workspace:^2.0.3",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-typescript2": "^0.30.0",
-    "sade": "^1.7.4",
+    "sade": "workspace:^1.7.4",
     "sirv": "^1.0.12",
     "string-replace-async": "^2.0.0",
     "svelte": "^3.38.3",
@@ -74,7 +83,7 @@
     "tslib": "^2.3.0",
     "typescript": "^4.3.5",
     "webpack": "^5.45.1",
-    "webpack-format-messages": "^2.0.6",
+    "webpack-format-messages": "workspace:^2.0.6",
     "webpack-modules": "^1.0.0"
   },
   "peerDependencies": {
@@ -83,7 +92,7 @@
   "scripts": {
     "test": "mocha --config=.mocharc.yml",
     "pretest": "npm run check",
-    "build": "rimraf dist && rollup -c",
+    "build": "rimraf dist && tsc -p tsconfig.src.json && rollup -c",
     "check": "rimraf dist && cross-env TS_CHECK_ENABLED=true rollup -c",
     "lint": "eslint '{src,runtime,test}/**/*.{ts,js,svelte}' && cd site && npm run lint",
     "prepare": "npm run build",

@@ -1,7 +1,7 @@
 import * as path from 'path';
-import RollupCompiler from './RollupCompiler';
-import { WebpackCompiler } from './WebpackCompiler';
-import { set_dev, set_src, set_dest } from '../../config/env';
+import RollupCompiler from './RollupCompiler.js';
+import { WebpackCompiler } from './WebpackCompiler.js';
+import { set_dev, set_src, set_dest } from '../../config/env.js';
 import { get_config_extname } from './config_extname.js'
 
 export type Compiler = RollupCompiler | WebpackCompiler;
@@ -43,7 +43,7 @@ export default async function create_compilers(
 	}
 
 	if (bundler === 'webpack') {
-		const config = require(path.resolve(cwd, 'webpack.config.js')); // eslint-disable-line
+		const config = await import(path.resolve(cwd, 'webpack.config.js'))
 		await validate_config(cwd, config, 'webpack');
 
 		return {

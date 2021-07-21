@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import mime from 'mime/lite';
+import * as mime from 'mime/lite.js';
+const { getType } = mime;
 import { Handler, SapperRequest, SapperResponse, build_dir, dev, manifest } from '@sapper/internal/manifest-server';
 import { get_server_route_handler } from './get_server_route_handler';
 import { get_page_handler } from './get_page_handler';
@@ -112,7 +113,7 @@ export function serve({ prefix, pathname, cache_control }: {
 
 	return (req: SapperRequest, res: SapperResponse, next: () => void) => {
 		if (filter(req)) {
-			const type = mime.getType(req.path);
+			const type = getType(req.path);
 
 			try {
 				const file = path.posix.normalize(decodeURIComponent(req.path));

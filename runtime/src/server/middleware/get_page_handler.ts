@@ -1,7 +1,8 @@
 import { writable } from 'svelte/store';
 import fs from 'fs';
 import path from 'path';
-import { parse } from 'cookie';
+import * as cookie from 'cookie';
+const { parse } = cookie;
 import devalue from 'devalue';
 import fetch from 'node-fetch';
 import URL from 'url';

@@ -5,16 +5,16 @@ import * as child_process from 'child_process';
 import * as ports from 'port-authority';
 import { EventEmitter } from 'events';
 import CheapWatch from 'cheap-watch';
-import { create_manifest_data, create_app, create_compilers, create_serviceworker_manifest } from '../core';
-import { Compiler, Compilers } from '../core/create_compilers';
-import { CompileResult } from '../core/create_compilers/interfaces';
-import Deferred from './utils/Deferred';
-import validate_bundler from './utils/validate_bundler';
-import { copy_shimport } from './utils/copy_shimport';
-import { ManifestData, FatalEvent, ErrorEvent, ReadyEvent, InvalidEvent } from '../interfaces';
-import { noop } from './utils/noop';
-import { copy_runtime } from './utils/copy_runtime';
-import { rimraf, mkdirp } from './utils/fs_utils';
+import { create_manifest_data, create_app, create_compilers, create_serviceworker_manifest } from '../core.js';
+import { Compiler, Compilers } from '../core/create_compilers/index.js';
+import { CompileResult } from '../core/create_compilers/interfaces.js';
+import Deferred from './utils/Deferred.js';
+import validate_bundler from './utils/validate_bundler.js';
+import { copy_shimport } from './utils/copy_shimport.js';
+import { ManifestData, FatalEvent, ErrorEvent, ReadyEvent, InvalidEvent } from '../interfaces.js';
+import { noop } from './utils/noop.js';
+import { copy_runtime } from './utils/copy_runtime.js';
+import { rimraf, mkdirp } from './utils/fs_utils.js';
 
 type Opts = {
 	cwd?: string;
@@ -142,11 +142,11 @@ class Watcher extends EventEmitter {
 
 		rimraf(output);
 		mkdirp(output);
-		copy_runtime(output);
+		await copy_runtime(output);
 
 		rimraf(dest);
 		mkdirp(`${dest}/client`);
-		if (this.bundler === 'rollup') copy_shimport(dest);
+		if (this.bundler === 'rollup') await copy_shimport(dest);
 
 		if (!this.dev_port) this.dev_port = await ports.find(10000);
 

@@ -1,8 +1,7 @@
 import * as path from 'path';
-import color from 'kleur';
-import relative from 'require-relative';
-import { dependenciesForTree, DependencyTreeOptions } from 'rollup-dependency-tree';
+import colors from 'kleur';
 import css_chunks from 'rollup-plugin-css-chunks';
+import relative from './require-relative.js';
 import {
 	NormalizedOutputOptions,
 	OutputBundle,
@@ -12,8 +11,9 @@ import {
 	RenderedChunk,
 	RollupError
 } from 'rollup';
-import { CompileResult } from './interfaces';
-import RollupResult from './RollupResult';
+import { dependenciesForTree, DependencyTreeOptions } from './rollup-dependency-tree.js';
+import { CompileResult } from './interfaces.js';
+import RollupResult from './RollupResult.js';
 import { get_config_extname } from './config_extname.js';
 
 const stderr = console.error.bind(console);
@@ -319,7 +319,7 @@ export default class RollupCompiler {
 		return mod;
 	}
 
-	oninvalid(cb: (filename: string) => void) {
+	async oninvalid(cb: (filename: string) => void) {
 		this._oninvalid = cb;
 	}
 
@@ -463,10 +463,10 @@ export function handleError(err: RollupError, recover = false) {
 		 ? `(plugin ${(err).plugin}) ${description}`
 		 : description) || err;
 
-	stderr(color.bold().red(`[!] ${color.bold(message.toString())}`));
+	stderr(colors.bold().red(`[!] ${colors.bold(message.toString())}`));
 
 	if (err.url) {
-		stderr(color.cyan(err.url));
+		stderr(colors.cyan(err.url));
 	}
 
 	if (err.loc) {
@@ -476,11 +476,11 @@ export function handleError(err: RollupError, recover = false) {
 	}
 
 	if (err.frame) {
-		stderr(color.dim(err.frame));
+		stderr(colors.dim(err.frame));
 	}
 
 	if (err.stack) {
-		stderr(color.dim(err.stack));
+		stderr(colors.dim(err.stack));
 	}
 
 	stderr('');

@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { SourceMapConsumer, RawSourceMap } from 'source-map';
-import replace_async from 'string-replace-async';
+import * as source_map from 'source-map';
+import type { RawSourceMap } from 'source-map';
+import { replace_async } from './replace_async';
+export const { SourceMapConsumer } = source_map;
 
 function get_sourcemap_url(contents: string) {
 	const reversed = contents

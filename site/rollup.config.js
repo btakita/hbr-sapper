@@ -2,11 +2,17 @@
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
-import resolve from '@rollup/plugin-node-resolve';
+import node_resolve from '@rollup/plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
-import pkg from './package.json';
+import { resolve } from 'import-meta-resolve';
+
+const pkg = JSON.parse(
+	(await readFile(
+		new URL(await resolve('../package.json', import.meta.url)).pathname
+	)).toString()
+)
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -32,7 +38,7 @@ export default {
 					hydratable: true
 				}
 			}),
-			resolve({
+			node_resolve({
 				browser: true,
 				dedupe: ['svelte']
 			}),
@@ -80,7 +86,7 @@ export default {
 				},
 				emitCss: false
 			}),
-			resolve({
+			node_resolve({
 				dedupe: ['svelte']
 			}),
 			commonjs()
@@ -97,7 +103,7 @@ export default {
 		input: config.serviceworker.input(),
 		output: config.serviceworker.output(),
 		plugins: [
-			resolve(),
+			node_resolve(),
 			replace({
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode)

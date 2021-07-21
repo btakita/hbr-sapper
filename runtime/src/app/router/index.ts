@@ -1,12 +1,12 @@
 import {
 	ScrollPosition,
 	Target
-} from '../types';
+} from '../types.js';
 import {
 	ignore,
 	routes
-} from '@sapper/internal/manifest-client';
-import find_anchor from './find_anchor';
+} from '@sapper/internal/manifest-client.js';
+import find_anchor from './find_anchor.js';
 import { Page, Query } from '@sapper/common';
 
 export let uid = 1;
