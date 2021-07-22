@@ -416,7 +416,6 @@ export default class RollupCompiler {
 		}
 		const bundle = await rollup.rollup({
 			input,
-			format,
 			inlineDynamicImports: true,
 			external: (id: string) => {
 				return (id[0] !== '.' && !path.isAbsolute(id)) || id.slice(-5, id.length) === '.json';
