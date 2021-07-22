@@ -65,7 +65,7 @@ export async function build({
 
 	const manifest_data = create_manifest_data(routes, ext);
 
-	// create src/node_modules/@sapper/app.mjs and server.mjs
+	// create src/node_modules/@sapper/app.js and server.js
 	create_app({
 		bundler,
 		manifest_data,
