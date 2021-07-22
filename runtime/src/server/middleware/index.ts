@@ -111,12 +111,12 @@ export function serve({ prefix, pathname, cache_control }: {
 		? (file: string) => fs.readFileSync(path.join(build_dir, file))
 		: (file: string) => (cache.has(file) ? cache : cache.set(file, fs.readFileSync(path.join(build_dir, file)))).get(file);
 
-	return (req: SapperRequest, res: SapperResponse, next: () => void) => {
+	return async (req: SapperRequest, res: SapperResponse, next: () => void) => {
 		if (filter(req)) {
 			const type = getType(req.path);
 
 			try {
-				const file = path.posix.normalize(decodeURIComponent(req.path));
+				const file = path.posix.normalize(path.join('.', decodeURIComponent(req.path)));
 				const data = read(file);
 
 				res.setHeader('Content-Type', type);
