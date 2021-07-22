@@ -287,7 +287,7 @@ async function _build(
 	dest: string,
 	ext: string
 ) {
-	const { build } = await import('./api/build');
+	const { build } = await import('./api/build.js');
 
 	await build({
 		bundler,
