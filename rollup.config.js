@@ -1,13 +1,11 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 import { builtinModules } from 'module';
 
 const tsOptions = {
-	check: !!process.env.TS_CHECK_ENABLED,
-	tsconfigOverride: {
-		compilerOptions: { module: 'esnext' }
-	}
+	checkJs: !!process.env.TS_CHECK_ENABLED,
+	module: 'esnext'
 };
 
 function template(kind, external) {
