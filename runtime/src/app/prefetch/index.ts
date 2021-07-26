@@ -29,6 +29,9 @@ export default function prefetch(href: string) {
 }
 
 export function get_prefetched(target: Target): Promise<HydratedTarget> {
+	console.debug('get_prefetched|debug|1', JSON.stringify({
+		target, 'target && target.href': target && target.href, prefetching, 'prefetching && prefetching.href': prefetching && prefetching.href
+	}, null, 2))
 	if (prefetching && prefetching.href === target.href) {
 		return prefetching.promise;
 	} else {
@@ -40,7 +43,8 @@ function trigger_prefetch(event: MouseEvent | TouchEvent) {
 	const a: HTMLAnchorElement = <HTMLAnchorElement>find_anchor(<Node>event.target);
 
 	if (a && a.hasAttribute('sapper:prefetch')) {
-		prefetch(a.href);
+		// Same path processing as select_target
+		prefetch(a.href === '' ? '/' : a.href);
 	}
 }
 

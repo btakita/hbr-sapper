@@ -120,6 +120,7 @@ export function get_page_handler(
 
 		const preload_context = {
 			redirect: (statusCode: number, location: string) => {
+				console.trace('redirect|debug|1', { statusCode, location })
 				if (redirect && (redirect.statusCode !== statusCode || redirect.location !== location)) {
 					throw new Error('Conflicting redirects');
 				}

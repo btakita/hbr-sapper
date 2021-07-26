@@ -119,8 +119,11 @@ function buildPageContext(props: any, page: Page): PageContext {
 
 	return { error, ...page };
 }
-
+let handle_target_count = 0;
 async function handle_target(dest: Target): Promise<void> {
+	if (handle_target_count > 10) throw 'DEBUG: handle_target called too many times!';
+	handle_target_count++;
+	console.trace('handle_target|debug|1', JSON.stringify({ dest }, null, 2))
 	if (root_component) stores.preloading.set(true);
 
 	const hydrating = get_prefetched(dest);
@@ -139,6 +142,9 @@ async function handle_target(dest: Target): Promise<void> {
 }
 
 async function render(branch: Branch, props: any, page: PageContext) {
+	console.debug('render|debug|1', JSON.stringify({
+		branch, props, page
+	}, null, 2))
 	stores.page.set(page);
 	stores.preloading.set(false);
 
@@ -169,6 +175,7 @@ async function render(branch: Branch, props: any, page: PageContext) {
 }
 
 function part_changed(i, segment, match, stringified_query) {
+	console.debug('part_changed|debug|1')
 	// TODO only check query string changes for preload functions
 	// that do in fact depend on it (using static analysis or
 	// runtime instrumentation)
@@ -187,6 +194,7 @@ function part_changed(i, segment, match, stringified_query) {
 
 export async function hydrate_target(dest: Target): Promise<HydratedTarget> {
 	const { route, page } = dest;
+	console.debug('hydrate_target|debug|1', JSON.stringify({ route, page }, null, 2));
 	const segments = page.path.split('/').filter(Boolean);
 
 	let redirect: Redirect = null;
@@ -196,6 +204,7 @@ export async function hydrate_target(dest: Target): Promise<HydratedTarget> {
 	const preload_context = {
 		fetch: (url: string, opts?: any) => fetch(url, opts),
 		redirect: (statusCode: number, location: string) => {
+			console.trace('redirect|debug|1', { statusCode, location })
 			if (redirect && (redirect.statusCode !== statusCode || redirect.location !== location)) {
 				throw new Error('Conflicting redirects');
 			}
@@ -237,8 +246,17 @@ export async function hydrate_target(dest: Target): Promise<HydratedTarget> {
 			const j = l++;
 
 			let result;
+			console.debug('hydrate_target|branch|debug|1', {
+				session_dirty,
+				segment_dirty,
+				current_branch,
+				'current_branch[i]': current_branch[i],
+				'current_branch[i] && current_branch[i].part': current_branch[i] && current_branch[i].part,
+				'part.i': part.i,
+			});
 
 			if (!session_dirty && !segment_dirty && current_branch[i] && current_branch[i].part === part.i) {
+				console.debug('hydrate_target|branch|debug|2');
 				result = current_branch[i];
 			} else {
 				segment_dirty = false;
@@ -246,8 +264,17 @@ export async function hydrate_target(dest: Target): Promise<HydratedTarget> {
 				const { default: component, preload } = await components[part.i].js();
 	
 				let preloaded: object;
-	
+				console.debug('hydrate_target|branch|debug|3', {
+					'part.i': part.i,
+				});
+				console.debug(component.toString());
+
 				if (ready || !initial_data.preloaded[i + 1]) {
+					console.debug('hydrate_target|branch|debug|4', {
+						ready, 'initial_data.preloaded[i + 1]': initial_data.preloaded[i + 1],
+						preload
+					});
+					console.debug((preload||'').toString());
 					preloaded = preload
 						? await preload.call(preload_context, {
 							host: page.host,
