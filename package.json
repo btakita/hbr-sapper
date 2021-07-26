@@ -39,19 +39,19 @@
     "string-hash": "^1.1.3"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^19.0.1",
+    "@rollup/plugin-commonjs": "^19.0.2",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.3",
+    "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-replace": "^3.0.0",
     "@rollup/plugin-typescript": "^8.2.3",
     "@sveltejs/eslint-config": "github:sveltejs/eslint-config#v5.4.0",
     "@types/cookie": "^0.4.1",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.4.2",
+    "@types/node": "^16.4.3",
     "@types/node-fetch": "^2.5.12",
     "@types/puppeteer": "^5.4.4",
-    "@typescript-eslint/eslint-plugin": "^4.28.4",
-    "@typescript-eslint/parser": "^4.28.4",
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
     "cheap-watch": "workspace:^1.0.3",
     "cookie": "^0.4.1",
     "cross-env": "^7.0.3",
@@ -63,7 +63,7 @@
     "import-meta-resolve": "workspace:^1.1.1",
     "kleur": "^4.1.4",
     "mime": "^2.5.2",
-    "mocha": "^9.0.2",
+    "mocha": "^9.0.3",
     "node-fetch": "^2.6.1",
     "npm-run-all": "^4.1.5",
     "polka": "^0.5.2",
@@ -71,13 +71,13 @@
     "pretty-bytes": "workspace:^5.6.0",
     "puppeteer": "^10.1.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.53.3",
+    "rollup": "^2.54.0",
     "rollup-plugin-css-chunks": "workspace:^2.0.3",
     "rollup-plugin-svelte": "^7.1.0",
     "sade": "workspace:^1.7.4",
     "sirv": "^1.0.12",
     "string-replace-async": "^2.0.0",
-    "svelte": "^3.40.2",
+    "svelte": "^3.40.3",
     "svelte-loader": "^3.1.2",
     "ts-node": "^10.1.0",
     "tslib": "^2.3.0",
@@ -87,7 +87,7 @@
     "webpack-modules": "^1.0.0"
   },
   "peerDependencies": {
-    "svelte": "^3.40.2"
+    "svelte": "^3.40.3"
   },
   "scripts": {
     "test": "mocha --config=.mocharc.yml",
