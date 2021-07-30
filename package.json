@@ -43,7 +43,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-replace": "^3.0.0",
-    "@rollup/plugin-typescript": "^8.2.4",
+    "@rollup/plugin-typescript": "^8.2.5",
     "@sveltejs/eslint-config": "github:sveltejs/eslint-config#v5.4.0",
     "@types/cookie": "^0.4.1",
     "@types/mocha": "^9.0.0",
