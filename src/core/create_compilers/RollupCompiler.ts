@@ -1,6 +1,7 @@
 import * as path from 'path';
 import colors from 'kleur';
-import css_chunks from 'rollup-plugin-css-chunks';
+import css_chunks_o from 'rollup-plugin-css-chunks';
+const { default: css_chunks } = css_chunks_o as any;
 import relative from './require-relative.js';
 import {
 	NormalizedOutputOptions,

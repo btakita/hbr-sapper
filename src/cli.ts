@@ -3,9 +3,11 @@ import { readFile } from 'fs/promises';
 import * as path from 'path';
 import sade from 'sade';
 import colors from 'kleur';
+import { resolve } from 'import-meta-resolve';
+import * as pb from 'pretty-bytes';
 import { elapsed, repeat, left_pad, format_milliseconds } from './utils.js';
 import { InvalidEvent, ErrorEvent, FatalEvent, BuildEvent, ReadyEvent } from './interfaces.js';
-import { resolve } from 'import-meta-resolve';
+
 const pkg = JSON.parse(
 	(await readFile(
 		new URL(await resolve('../package.json', import.meta.url)).pathname
@@ -238,7 +240,6 @@ prog.command('export [dest]')
 			}
 
 			const { export: _export } = await import('./api/export.js');
-			const { default: pb } = await import('pretty-bytes');
 
 			await _export({
 				cwd: opts.cwd,
