@@ -70,10 +70,6 @@ export function load_current_page(): Promise<void> {
 	});
 }
 
-export function build_history_url(href: string) {
-
-}
-
 // IE11 does not support URLSearchParams so we'll fall back to a custom
 // RegExp that mimics the standard URLSearchParams method
 const _get_query_array = (search: string): string[][] => {
