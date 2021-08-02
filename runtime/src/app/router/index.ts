@@ -171,7 +171,7 @@ function handle_click(event: MouseEvent) {
 		navigate(target, null, noscroll, url.hash);
 		event.preventDefault();
 		// Handle file:// hash-based routing
-		const href = url.origin === "file://" ?  `file://${base_url}#${url.pathname}${url.hash}` : url.href;
+		const href = url.origin === "file://" ? `file://${base_url}#${url.pathname}${url.hash}` : url.href;
 		_history.pushState({ id: cid }, '', href);
 	}
 }
