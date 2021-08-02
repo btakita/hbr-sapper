@@ -29,9 +29,6 @@ export default function prefetch(href: string) {
 }
 
 export function get_prefetched(target: Target): Promise<HydratedTarget> {
-	console.debug('get_prefetched|debug|1', JSON.stringify({
-		target, 'target && target.href': target && target.href, prefetching, 'prefetching && prefetching.href': prefetching && prefetching.href
-	}, null, 2))
 	if (prefetching && prefetching.href === target.href) {
 		return prefetching.promise;
 	} else {

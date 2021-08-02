@@ -32,9 +32,6 @@ export let base_url: string;
 let handle_target: (dest: Target) => Promise<void>;
 
 export function init(base: string, handler: (dest: Target) => Promise<void>): void {
-	console.debug('init|debug|1', JSON.stringify({
-		base,
-	}))
 	base_url = base;
 	handle_target = handler;
 
@@ -63,9 +60,6 @@ export function load_current_page(): Promise<void> {
 	return Promise.resolve().then(() => {
 		const { href } = location;
 
-		console.debug('load_current_page|debug|1', JSON.stringify({
-			href
-		}, null, 2))
 		// Use location href
 		_history.replaceState({ id: uid }, '', href);
 
@@ -83,7 +77,6 @@ export function build_history_url(href: string) {
 // IE11 does not support URLSearchParams so we'll fall back to a custom
 // RegExp that mimics the standard URLSearchParams method
 const _get_query_array = (search: string): string[][] => {
-	console.debug('_get_query_array|debug|1', { search })
 	if (typeof URLSearchParams !== 'undefined') {
 		return 	[...new URLSearchParams(search).entries()];
 	}
@@ -108,24 +101,18 @@ export function extract_query(search: string): Query {
 }
 
 export function select_target(url: URL): Target {
-	console.debug('select_target|debug|1', url.toString(), url.origin !== location.origin);
 	if (url.origin !== location.origin) return null;
 	const is_file_orgin = url.origin === 'file://'
-	console.debug('select_target|debug|2', url.toString(), !url.pathname.startsWith(base_url) && !is_file_orgin);
 	if (!url.pathname.startsWith(base_url) && !is_file_orgin) return null;
 
 	let path = is_file_orgin
 						 ? url.pathname.slice(0).replace(base_url, '')
 						 : url.pathname.slice(base_url.length);
-	console.debug('select_target|debug|3', url.toString(), {
-		'url.origin': url.origin, is_file_orgin, path, 'url.hostname': url.hostname, 'url.pathname': url.pathname
-	});
 
 	if (path === '') {
 		path = '/';
 	}
 
-	console.debug('select_target|debug|4', url.toString(), { path });
 	// avoid accidental clashes between server routes and page routes
 	if (ignore.some(pattern => pattern.test(path))) return;
 
@@ -134,7 +121,6 @@ export function select_target(url: URL): Target {
 
 		const match = route.pattern.exec(path);
 
-		console.debug('select_target|for|debug|1', url.toString(), { path, i, match, route });
 		if (match) {
 			const query = extract_query(url.search);
 			const part = route.parts[route.parts.length - 1];
@@ -190,9 +176,6 @@ function handle_click(event: MouseEvent) {
 		event.preventDefault();
 		// Handle file:// hash-based routing
 		const href = url.origin === "file://" ?  `file://${base_url}#${url.pathname}${url.hash}` : url.href;
-		console.debug('handle_click|debug|1', JSON.stringify({
-			href,
-		}, null, 2))
 		_history.pushState({ id: cid }, '', href);
 	}
 }
@@ -210,10 +193,6 @@ function scroll_state() {
 
 function handle_popstate(event: PopStateEvent) {
 	scroll_history[cid] = scroll_state();
-	console.debug('handle_popstate|debug|1', JSON.stringify({
-		event,
-		'location.href': location.href,
-	}))
 
 	if (event.state) {
 		const url = new URL(location.href);
@@ -233,9 +212,6 @@ function handle_popstate(event: PopStateEvent) {
 }
 
 export async function navigate(dest: Target, id: number, noscroll?: boolean, hash?: string): Promise<void> {
-	console.debug('navigate|debug|1', JSON.stringify({
-		dest, id, cid
-	}, null, 2))
 	const popstate = !!id;
 	if (popstate) {
 		cid = id;
