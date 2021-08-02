@@ -119,10 +119,7 @@ function buildPageContext(props: any, page: Page): PageContext {
 
 	return { error, ...page };
 }
-let handle_target_count = 0;
 async function handle_target(dest: Target): Promise<void> {
-	if (handle_target_count > 10) throw 'DEBUG: handle_target called too many times!';
-	handle_target_count++;
 	if (root_component) stores.preloading.set(true);
 
 	const hydrating = get_prefetched(dest);
