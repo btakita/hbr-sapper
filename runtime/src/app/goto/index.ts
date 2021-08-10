@@ -5,6 +5,9 @@ export default function goto(
 	href: string,
 	opts: { noscroll?: boolean; replaceState?: boolean } = { noscroll: false, replaceState: false }
 ): Promise<void> {
+	if (!/\:\/\//.test(href) && href[0] !== '/') {
+		href = `/${href}`;
+	}
 	const url = new URL(href, get_base_uri(document));
 	const target = select_target(url);
 
