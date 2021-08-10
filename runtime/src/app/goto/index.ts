@@ -11,7 +11,7 @@ export default function goto(
 	if (target) {
 		const res = navigate(target, null, opts.noscroll);
 		// file:// hash-based routing case: Convert local urls to hash urls
-		href = url.origin === 'file://' ? `file://${base_url}#${url.pathname}${url.hash}` : href;
+		href = url.origin === 'file://' ? `file://${base_url}#${url.pathname}${url.search}${url.hash}` : href;
 		history[opts.replaceState ? 'replaceState' : 'pushState']({ id: cid }, '', href);
 		return res;
 	}
