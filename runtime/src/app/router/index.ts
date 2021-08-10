@@ -102,7 +102,7 @@ export function select_target(url: URL): Target {
 	if (!url.pathname.startsWith(base_url) && !is_file_orgin) return null;
 
 	let path = is_file_orgin
-						 ? url.pathname.slice(0).replace(base_url, '')
+						 ? url.pathname.slice(0).replace(base_url.split('?')[0], '')
 						 : url.pathname.slice(base_url.length);
 
 	if (path === '') {
@@ -171,7 +171,7 @@ function handle_click(event: MouseEvent) {
 		navigate(target, null, noscroll, url.hash);
 		event.preventDefault();
 		// Handle file:// hash-based routing
-		const href = url.origin === "file://" ? `file://${base_url}#${url.pathname}${url.hash}` : url.href;
+		const href = url.origin === "file://" ? `file://${base_url}#${url.pathname}${url.search}${url.hash}` : url.href;
 		_history.pushState({ id: cid }, '', href);
 	}
 }
