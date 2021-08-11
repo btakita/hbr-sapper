@@ -187,7 +187,7 @@ prog.command('build [dest]')
 				process.env.PORT = process.env.PORT || ${opts.port || 3000};
 
 				console.log('Starting server on port ' + process.env.PORT);
-				require('./server/server.js');
+				import './server/server.js';
 			`.replace(/^\t+/gm, '').trim());
 
 			console.error(`\n> Finished in ${elapsed(start)}. Type ${colors.bold().cyan(`node ${dest}`)} to run the app.`);
