@@ -102,7 +102,7 @@ export function select_target(url: URL): Target {
 	if (!url.pathname.startsWith(base_url) && !is_file_orgin) return null;
 
 	let path = is_file_orgin
-						 ? url.pathname.slice(0).replace(base_url.split('?')[0], '')
+						 ? url.hash.slice(1)
 						 : url.pathname.slice(base_url.length);
 
 	if (path === '') {
@@ -144,7 +144,22 @@ function handle_click(event: MouseEvent) {
 	// check if link is inside an svg
 	// in this case, both href and target are always inside an object
 	const svg = typeof a.href === 'object' && a.href.constructor.name === 'SVGAnimatedString';
-	const href = String(svg ? (<SVGAElement>a).href.baseVal : a.href);
+	const is_file_orgin = location.origin === 'file://';
+	let href: string;
+	if (svg) {
+		href = String((<SVGAElement>a).href.baseVal);
+	} else {
+		if (is_file_orgin) {
+			const href_attribute = a.getAttribute('href');
+			href = `file://${base_url}#${
+				(!/^[a-z]+\:\/\//.test(href_attribute) && href_attribute[0] !== '/')
+					? `/${href_attribute}`
+					: href_attribute
+			}`;
+		} else {
+			href = String(a.href);
+		}
+	}
 
 	if (href === location.href) {
 		if (!location.hash) event.preventDefault();
@@ -162,7 +177,11 @@ function handle_click(event: MouseEvent) {
 	const url = new URL(href);
 
 	// Don't handle hash changes
-	if (url.pathname === location.pathname && url.search === location.search) return;
+	if (
+		is_file_orgin
+		? url.hash === location.hash
+		: (url.pathname === location.pathname && url.search === location.search)
+	) return;
 
 	const target = select_target(url);
 	if (target) {
@@ -171,7 +190,7 @@ function handle_click(event: MouseEvent) {
 		navigate(target, null, noscroll, url.hash);
 		event.preventDefault();
 		// Handle file:// hash-based routing
-		const href = url.origin === "file://" ? `file://${base_url}#${url.pathname}${url.search}${url.hash}` : url.href;
+		const href = url.origin === "file://" ? `file://${url.pathname}${url.search}${url.hash}` : url.href;
 		_history.pushState({ id: cid }, '', href);
 	}
 }

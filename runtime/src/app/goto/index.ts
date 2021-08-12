@@ -8,14 +8,15 @@ export default function goto(
 	if (!/\:\/\//.test(href) && href[0] !== '/') {
 		href = `/${href}`;
 	}
-	const url = new URL(href, get_base_uri(document));
+	const url =
+		location.origin === 'file://'
+		? new URL(`file://${base_url}#${href}`)
+		:	new URL(href, get_base_uri(document));
 	const target = select_target(url);
 
 	if (target) {
 		const res = navigate(target, null, opts.noscroll);
-		// file:// hash-based routing case: Convert local urls to hash urls
-		href = url.origin === 'file://' ? `file://${base_url}#${url.pathname}${url.search}${url.hash}` : href;
-		history[opts.replaceState ? 'replaceState' : 'pushState']({ id: cid }, '', href);
+		history[opts.replaceState ? 'replaceState' : 'pushState']({ id: cid }, '', url.toString());
 		return res;
 	}
 
