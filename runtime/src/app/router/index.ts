@@ -102,7 +102,7 @@ export function select_target(url: URL): Target {
 	if (!url.pathname.startsWith(base_url) && !is_file_orgin) return null;
 
 	let path = is_file_orgin
-						 ? url.hash.slice(1)
+						 ? url.hash.slice(1).split('?')[0].split('#')[0]
 						 : url.pathname.slice(base_url.length);
 
 	if (path === '') {
