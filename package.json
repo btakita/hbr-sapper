@@ -75,7 +75,7 @@
     "rollup-plugin-css-chunks": "^2.0.3",
     "rollup-plugin-svelte": "^7.1.0",
     "sade": "1.7.4",
-    "sirv": "^1.0.12",
+    "sirv": "^1.0.14",
     "string-replace-async": "^2.0.0",
     "svelte": "^3.42.1",
     "svelte-loader": "^3.1.2",
