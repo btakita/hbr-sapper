@@ -8,7 +8,7 @@ export function get_base_uri(window_document) {
 
 	return baseURI;
 }
-const http_regex = /^https?:\/\//
+const file_regex = /^file:\/\//;
 export function is_hash_routing_(url) {
-  return !http_regex.test(url.origin)
+  return file_regex.test(url.origin) || (typeof window !== 'undefined' && (window as any).cordova);
 }
