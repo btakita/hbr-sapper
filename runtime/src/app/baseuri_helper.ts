@@ -9,6 +9,6 @@ export function get_base_uri(window_document) {
 	return baseURI;
 }
 const file_regex = /^file:\/\//;
-export function is_hash_routing_(url) {
-  return file_regex.test(url.origin) || (typeof window !== 'undefined' && (window as any).cordova);
+export function is_hash_routing_(url):boolean {
+  return !!(file_regex.test(url.origin) || (typeof window !== 'undefined' && (window as any).cordova));
 }
