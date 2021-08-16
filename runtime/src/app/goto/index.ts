@@ -1,5 +1,5 @@
 import { base_url, cid, history, navigate, select_target } from '../router/index.js';
-import { get_base_uri } from '../baseuri_helper.js';
+import { get_base_uri, is_hash_routing_ } from '../baseuri_helper.js'
 
 export default function goto(
 	href: string,
@@ -9,9 +9,9 @@ export default function goto(
 		href = `/${href}`;
 	}
 	const url =
-		location.origin === 'file://'
+		is_hash_routing_(location)
 		? new URL(`file://${base_url}#${href}`)
-		:	new URL(href, get_base_uri(document));
+		: new URL(href, get_base_uri(document));
 	const target = select_target(url);
 
 	if (target) {
