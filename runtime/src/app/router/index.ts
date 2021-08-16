@@ -8,6 +8,7 @@ import {
 } from '@sapper/internal/manifest-client.js';
 import find_anchor from './find_anchor.js';
 import { Page, Query } from '@sapper/common';
+import { is_hash_routing_ } from '../baseuri_helper.js'
 
 export let uid = 1;
 export function set_uid(n: number) {
@@ -65,7 +66,7 @@ export function load_current_page(): Promise<void> {
 
 		const target = select_target(new URL(location.href));
 		// Handle hash from file:// hash-based routing case
-		const { hash } = (location.origin === 'file://' ? new URL(`file://${location.hash.slice(1)}`) : location);
+		const { hash } = (is_hash_routing_(location) ? new URL(`file://${location.hash.slice(1)}`) : location);
 		if (target) return navigate(target, uid, true, hash);
 	});
 }
@@ -98,10 +99,10 @@ export function extract_query(search: string): Query {
 
 export function select_target(url: URL): Target {
 	if (url.origin !== location.origin) return null;
-	const is_file_orgin = url.origin === 'file://'
-	if (!url.pathname.startsWith(base_url) && !is_file_orgin) return null;
+	const is_hash_routing = is_hash_routing_(url)
+	if (!url.pathname.startsWith(base_url) && !is_hash_routing) return null;
 
-	let path = is_file_orgin
+	let path = is_hash_routing
 						 ? url.hash.slice(1).split('?')[0].split('#')[0]
 						 : url.pathname.slice(base_url.length);
 
@@ -144,12 +145,12 @@ function handle_click(event: MouseEvent) {
 	// check if link is inside an svg
 	// in this case, both href and target are always inside an object
 	const svg = typeof a.href === 'object' && a.href.constructor.name === 'SVGAnimatedString';
-	const is_file_orgin = location.origin === 'file://';
+	const is_file_routing = is_hash_routing_(location);
 	let href: string;
 	if (svg) {
 		href = String((<SVGAElement>a).href.baseVal);
 	} else {
-		if (is_file_orgin) {
+		if (is_file_routing) {
 			const href_attribute = a.getAttribute('href');
 			href = `file://${base_url}#${
 				(!/^[a-z]+\:\/\//.test(href_attribute) && href_attribute[0] !== '/')
@@ -178,7 +179,7 @@ function handle_click(event: MouseEvent) {
 
 	// Don't handle hash changes
 	if (
-		is_file_orgin
+		is_file_routing
 		? url.hash === location.hash
 		: (url.pathname === location.pathname && url.search === location.search)
 	) return;
@@ -190,7 +191,7 @@ function handle_click(event: MouseEvent) {
 		navigate(target, null, noscroll, url.hash);
 		event.preventDefault();
 		// Handle file:// hash-based routing
-		const href = url.origin === "file://" ? `file://${url.pathname}${url.search}${url.hash}` : url.href;
+		const href = is_hash_routing_(url) ? `file://${url.pathname}${url.search}${url.hash}` : url.href;
 		_history.pushState({ id: cid }, '', href);
 	}
 }
