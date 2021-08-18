@@ -134,7 +134,7 @@ function handle_click(event:MouseEvent) {
 		}
 	}
 	if (href === location.href) {
-		if (!location.hash) event.preventDefault()
+		if (is_hash_routing || !location.hash) event.preventDefault()
 		return
 	}
 	// Ignore if tag has
