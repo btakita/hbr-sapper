@@ -47,7 +47,7 @@
     "@sveltejs/eslint-config": "github:sveltejs/eslint-config#v5.4.0",
     "@types/cookie": "^0.4.1",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.7.10",
+    "@types/node": "^16.7.12",
     "@types/node-fetch": "^3.0.3",
     "@types/puppeteer": "^5.4.4",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
