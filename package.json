@@ -73,6 +73,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.56.3",
     "rollup-plugin-css-chunks": "^2.0.3",
+    "rollup-plugin-shim": "^1.0.0",
     "rollup-plugin-svelte": "^7.1.0",
     "sade": "1.7.4",
     "sirv": "^1.0.17",

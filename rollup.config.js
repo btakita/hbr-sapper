@@ -1,6 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import { default as shim } from 'rollup-plugin-shim';
 import { builtinModules } from 'module';
 
 const tsOptions = {
@@ -20,6 +21,9 @@ function template(kind, external) {
 		plugins: [
 			resolve({
 				extensions: ['.mjs', '.js', '.ts', '.json']
+			}),
+			shim({
+				'stream/web': 'export {};',
 			}),
 			commonjs(),
 			typescript(tsOptions)
