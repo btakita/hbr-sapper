@@ -225,7 +225,7 @@ export async function hydrate_target(dest: Target): Promise<HydratedTarget> {
 
 		let segment_dirty = false;
 
-		branch = await Promise.all(route.parts.map(async (part, i) => {
+		const component_result_js_a = await Promise.all(route.parts.map(async (part, i) => {
 			const segment = segments[i];
 
 			if (part_changed(i, segment, match, stringified_query)) segment_dirty = true;
@@ -233,17 +233,29 @@ export async function hydrate_target(dest: Target): Promise<HydratedTarget> {
 			props.segments[l] = segments[i + 1]; // TODO make this less confusing
 			if (!part) return { segment };
 
-			const j = l++;
-
-			let result;
-
 			if (!session_dirty && !segment_dirty && current_branch[i] && current_branch[i].part === part.i) {
-				result = current_branch[i];
+				return { part, result: current_branch[i] };
 			} else {
 				segment_dirty = false;
-	
 				const { default: component, preload } = await components[part.i].js();
-	
+				return { component, preload, part };
+			}
+		}));
+
+		l = 1;
+		branch = await Promise.all(component_result_js_a.map(async (component_result_js, i) => {
+			const segment = segments[i];
+			if (!component_result_js.part) {
+				return { segment };
+			}
+
+			const j = l++;
+
+			let { result } = component_result_js;
+
+			if (!result) {
+				const { component, preload, part } = component_result_js;
+
 				let preloaded: object;
 
 				if (ready || !initial_data.preloaded[i + 1]) {

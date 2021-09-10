@@ -89,7 +89,7 @@ export function get_page_handler(
 				preload_files = preload_files.concat(deps);
 			}
 		} else if (!error && !is_service_worker_index) {
-			page.parts.forEach(part => {
+			page.parts.forEach((part, i) => {
 				if (!part) return;
 				// using concat because it could be a string or an array. thanks webpack!
 				preload_files = preload_files.concat(build_info.assets[part.name]);
@@ -193,7 +193,7 @@ export function get_page_handler(
 
 			let toPreload: PreloadResult[] = [root_preloaded];
 			if (!is_service_worker_index) {
-				toPreload = toPreload.concat(page.parts.map(part => {
+				toPreload = toPreload.concat(page.parts.map((part, i) => {
 					if (!part) return null;
 
 					// the deepest level is used below, to initialise the store
@@ -359,7 +359,7 @@ export function get_page_handler(
 			// TODO embed build_info in placeholder.ts
 			if (build_info.css && build_info.css.main) {
 				const css_chunks = new Set(build_info.css.main);
-				page.parts.forEach(part => {
+				page.parts.forEach((part, i) => {
 					if (!part || !build_info.dependencies) return;
 					const deps_for_part = build_info.dependencies[part.file];
 

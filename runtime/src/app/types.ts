@@ -11,6 +11,7 @@ export type Branch = Array<{
 	segment: string;
 	match?: RegExpExecArray;
 	component?: DOMComponentConstructor;
+	props?: object;
 	part?: number;
 }>;
 
