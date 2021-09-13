@@ -57,7 +57,7 @@
     "cross-env": "^7.0.3",
     "devalue": "^2.0.1",
     "eslint": "^7.32.0",
-    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-svelte3": "^3.2.1",
     "import-meta-resolve": "^1.1.1",
