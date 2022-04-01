@@ -27,9 +27,10 @@ export function get_server_route_handler(routes: ServerRoute[]) {
 					return res;
 				};
 
-				res.end = function(chunk?: any) {
-					if (chunk) chunks.push(Buffer.from(chunk));
-					end.apply(res, [chunk]);
+				res.end = function(chunk_or_cb: any|(()=>void), cb_or_encoding?: (()=>void)|BufferEncoding, cb?: ()=>void) {
+					const chunk = typeof chunk_or_cb === 'function' ? null : chunk_or_cb as any
+					if (chunk_or_cb) chunks.push(Buffer.from(chunk_or_cb));
+					end.apply(res, [chunk_or_cb]);
 
 					process.send({
 						__sapper__: true,
@@ -40,6 +41,7 @@ export function get_server_route_handler(routes: ServerRoute[]) {
 						type: headers['content-type'],
 						body: Buffer.concat(chunks)
 					});
+					return this;
 				};
 			}
 

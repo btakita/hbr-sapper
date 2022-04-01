@@ -4,7 +4,7 @@ import * as path from 'path';
 import sade from 'sade';
 import colors from 'kleur';
 import { resolve } from 'import-meta-resolve';
-import * as pb from 'pretty-bytes';
+import pb from 'pretty-bytes';
 import { elapsed, repeat, left_pad, format_milliseconds } from './utils.js';
 import { InvalidEvent, ErrorEvent, FatalEvent, BuildEvent, ReadyEvent } from './interfaces.js';
 
