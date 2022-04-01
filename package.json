@@ -1,6 +1,6 @@
 {
-  "name": "sapper",
-  "version": "0.29.1 ",
+  "name": "hbr-sapper",
+  "version": "0.29.1",
   "description": "The next small thing in web development, powered by Svelte",
   "bin": {
     "sapper": "./dist/cli.js"
@@ -96,8 +96,7 @@
     "build": "rimraf dist && tsc -p tsconfig.src.json && rollup -c",
     "check": "rimraf dist && cross-env TS_CHECK_ENABLED=true rollup -c",
     "lint": "eslint '{src,runtime,test}/**/*.{ts,js,svelte}' && cd site && npm run lint",
-    "dev": "rollup -cw",
-    "prepublishOnly": "npm test"
+    "dev": "rollup -cw"
   },
   "repository": "https://github.com/sveltejs/sapper",
   "keywords": [
