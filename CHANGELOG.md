@@ -6,6 +6,10 @@
 * Update `rollup-plugin-chunks` dependency to fix regex routes ([#1757](https://github.com/sveltejs/sapper/issues/1757))
 * Fix status code when requesting directory ([#1734](https://github.com/sveltejs/sapper/issues/1734))
 
+## 0.29.3
+
+* fix build
+
 ## 0.29.2
 
 * hbr-sapper initial version of fork with sapper + hbr
