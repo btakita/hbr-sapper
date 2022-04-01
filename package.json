@@ -109,7 +109,7 @@
   "author": "Rich Harris",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sveltejs/sapper/issues"
+    "url": "https://github.com/btakita/hbr-sapper/issues"
   },
-  "homepage": "https://github.com/sveltejs/sapper#readme"
+  "homepage": "https://github.com/btakita/hbr-sapper#hbr"
 }
