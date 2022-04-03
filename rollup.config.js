@@ -18,6 +18,7 @@ function template(kind, external) {
 			paths: id => id.replace('@sapper', '.')
 		},
 		external,
+		inlineDynamicImports: true,
 		plugins: [
 			resolve({
 				extensions: ['.mjs', '.js', '.ts', '.json']

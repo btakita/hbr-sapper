@@ -6,6 +6,10 @@
 * Update `rollup-plugin-chunks` dependency to fix regex routes ([#1757](https://github.com/sveltejs/sapper/issues/1757))
 * Fix status code when requesting directory ([#1734](https://github.com/sveltejs/sapper/issues/1734))
 
+## 0.29.2
+
+* Initial release of menus-hbr-sapper
+
 ## 0.29.1
 
 * Restore hashing of all CSS file names ([#1716](https://github.com/sveltejs/sapper/issues/1716))
