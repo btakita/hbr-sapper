@@ -1,6 +1,6 @@
 {
   "name": "menus-hbr-sapper",
-  "version": "0.29.4",
+  "version": "0.29.5",
   "description": "The next small thing in web development, powered by Svelte...with Hash Based Routing...customized for menus.com",
   "bin": {
     "sapper": "./dist/cli.js"
@@ -23,6 +23,7 @@
     "config",
     "sapper",
     "dist/*.js",
+    "dist/**/*.js",
     "runtime/*.mjs",
     "runtime/index.d.ts",
     "runtime/internal"
