@@ -52,7 +52,7 @@
     "@types/puppeteer": "^5.4.4",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
-    "cheap-watch": "workspace:^1.0.3",
+    "cheap-watch": "^1.0.3",
     "cookie": "^0.4.1",
     "cross-env": "^7.0.3",
     "devalue": "^2.0.1",
