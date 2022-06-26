@@ -36,7 +36,7 @@
     "html-minifier": "^4.0.0",
     "http-link-header": "^1.0.4",
     "import-meta-resolve": "^2.0.3",
-    "kleur": "^4.1.4",
+    "kleur": "^4.1.5",
     "node-fetch": "^3.2.6",
     "port-authority": "^2.0.1",
     "pretty-bytes": "^6.0.0",
