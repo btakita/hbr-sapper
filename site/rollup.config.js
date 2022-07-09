@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-named-as-default
+import { readFile } from 'fs/promises';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';

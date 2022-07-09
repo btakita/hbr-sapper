@@ -95,7 +95,7 @@
   "scripts": {
     "test": "mocha --config=.mocharc.yml",
     "pretest": "npm run check",
-    "build": "rimraf dist && tsc -p tsconfig.src.json && rollup -c",
+    "build": "rimraf dist && tsc -p tsconfig.src.json && rollup -c && cat ./runtime/server.js | sed -E 's/node://' > ./runtime/server.new.js && mv ./runtime/server.new.js ./runtime/server.js",
     "check": "rimraf dist && cross-env TS_CHECK_ENABLED=true rollup -c",
     "lint": "eslint '{src,runtime,test}/**/*.{ts,js,svelte}' && cd site && npm run lint",
     "dev": "rollup -cw"

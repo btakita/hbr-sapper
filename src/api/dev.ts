@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as http from 'node:http';
+import * as http from 'http';
 import * as child_process from 'child_process';
 import * as ports from 'port-authority';
 import { EventEmitter } from 'events';
