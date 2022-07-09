@@ -1,9 +1,9 @@
 import * as path from 'path';
 import * as puppeteer from 'puppeteer';
 import { fork, ChildProcess } from 'child_process';
-import { AddressInfo } from 'net';
+import { type AddressInfo } from 'net';
 
-import { wait } from '../utils';
+import { wait } from '../utils.js';
 
 const DEFAULT_ENTRY = '__sapper__/build/server/server.js';
 const DELAY = parseInt(process.env.SAPPER_TEST_DELAY) || 50;

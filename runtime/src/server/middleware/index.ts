@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import * as mime from 'mime/lite.js';
+import mime from 'mime/lite.js';
 const { getType } = mime;
 import { Handler, SapperRequest, SapperResponse, build_dir, dev, manifest } from '@sapper/internal/manifest-server';
 import { get_server_route_handler } from './get_server_route_handler';

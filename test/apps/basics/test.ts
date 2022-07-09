@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import * as http from 'http';
+import * as http from 'node:http';
 import {build} from '../../../api';
 import {AppRunner} from '../AppRunner';
 

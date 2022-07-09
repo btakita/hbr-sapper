@@ -312,7 +312,7 @@ async function _export({
 			res();
 		});
 
-		ports.wait(port).then(() => {
+		ports.waitUntilFree(port).then(() => {
 			try {
 				for (const entryPoint of entryPoints) {
 					oninfo({

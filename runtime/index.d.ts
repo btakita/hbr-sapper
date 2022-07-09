@@ -26,7 +26,7 @@ declare module '@sapper/app' {
 }
 
 declare module '@sapper/server' {
-	import { IncomingMessage, ServerResponse } from 'http';
+	import { IncomingMessage, ServerResponse } from 'node:http';
 	import { Socket } from 'net';
 
 	export type Ignore = string | RegExp | ((uri: string) => boolean) | Ignore[];
