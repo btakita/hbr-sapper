@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import * as cookie from 'cookie';
 const { parse } = cookie;
-import devalue from 'devalue';
+import { devalue } from 'devalue';
 import fetch from 'node-fetch';
 import URL from 'url';
 import { sourcemap_stacktrace } from './sourcemap_stacktrace';
