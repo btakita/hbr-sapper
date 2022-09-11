@@ -1,5 +1,5 @@
-import { get_base_uri } from '@sapper/app/baseuri_helper'
-import find_anchor from '@sapper/app/router/find_anchor'
+import { get_base_uri } from './baseuri_helper'
+import find_anchor from './router/find_anchor'
 import { writable } from 'svelte/store';
 import App from '@sapper/internal/App.svelte';
 import {
