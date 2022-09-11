@@ -1,3 +1,5 @@
+import { get_base_uri } from '@sapper/app/baseuri_helper'
+import find_anchor from '@sapper/app/router/find_anchor'
 import { writable } from 'svelte/store';
 import App from '@sapper/internal/App.svelte';
 import {
@@ -6,13 +8,12 @@ import {
 	load_current_page,
 	select_target
 } from './router/index.js';
-import { get_prefetched, start as start_prefetching } from './prefetch/index.js';
 import {
 	ErrorComponent,
 	components,
 	root_comp
 } from '@sapper/internal/manifest-client.js';
-import {
+import type {
 	HydratedTarget,
 	Target,
 	Redirect,
@@ -20,7 +21,7 @@ import {
 	Page,
 	InitialData
 } from './types.js';
-import { PageContext } from '@sapper/common';
+import { type PageContext } from '@sapper/common';
 import goto from './goto/index.js';
 import { page_store } from './stores/index.js';
 
@@ -67,7 +68,7 @@ export function set_target(node: Node) {
 	target = node;
 }
 
-export default function start(opts: {
+export function start(opts: {
 	target: Node
 }): Promise<void> {
 	set_target(opts.target);
@@ -283,4 +284,52 @@ export async function hydrate_target(dest: Target): Promise<HydratedTarget> {
 	}
 
 	return { redirect, props, branch };
+}
+
+let prefetching: {
+	href: string;
+	promise: Promise<HydratedTarget>;
+} = null;
+
+let mousemove_timeout: NodeJS.Timer;
+
+export function start_prefetching() {
+	addEventListener('touchstart', trigger_prefetch);
+	addEventListener('mousemove', handle_mousemove);
+}
+
+export function prefetch(href: string) {
+	const target = select_target(new URL(href, get_base_uri(document)));
+
+	if (target) {
+		if (!prefetching || href !== prefetching.href) {
+			prefetching = { href, promise: hydrate_target(target) };
+		}
+
+		return prefetching.promise;
+	}
+}
+
+export function get_prefetched(target: Target): Promise<HydratedTarget> {
+	if (prefetching && prefetching.href === target.href) {
+		return prefetching.promise;
+	} else {
+		return hydrate_target(target);
+	}
+}
+
+function trigger_prefetch(event: MouseEvent | TouchEvent) {
+	const a: HTMLAnchorElement = <HTMLAnchorElement>find_anchor(<Node>event.target);
+
+	if (a && a.hasAttribute('sapper:prefetch')) {
+		// Same path processing as select_target
+		prefetch(a.href === '' ? '/' : a.href);
+	}
+}
+
+function handle_mousemove(event: MouseEvent) {
+	clearTimeout(mousemove_timeout);
+	mousemove_timeout = setTimeout(() => {
+		trigger_prefetch(event);
+	}, 20);
 }
