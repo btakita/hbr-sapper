@@ -5,7 +5,7 @@ import * as urllib from 'url';
 import { promisify } from 'util';
 import fetch from 'node-fetch';
 import * as ports from 'port-authority';
-import { exportQueue, FetchOpts, FetchRet } from './utils/export_queue.js';
+import { exportQueue, type FetchOpts, type FetchRet } from './utils/export_queue.js';
 import clean_html from './utils/clean_html.js';
 import minify_html from './utils/minify_html.js';
 import Deferred from './utils/Deferred.js';
