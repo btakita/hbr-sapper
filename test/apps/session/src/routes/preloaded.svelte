@@ -5,7 +5,7 @@
 </script>
 
 <script>
-	import { stores } from '@sapper/app';
+	import { stores } from '@sapper/app-lib';
 	const { session } = stores();
 
 	export let title;

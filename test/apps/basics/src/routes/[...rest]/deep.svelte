@@ -6,7 +6,7 @@
 </script>
 
 <script>
-	import { stores } from '@sapper/app';
+	import { stores } from '@sapper/app-lib';
 	const { page } = stores();
 	export let rest;
 </script>

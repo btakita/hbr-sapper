@@ -5,6 +5,8 @@ __sapper__
 dist
 /runtime/app.js
 /runtime/app.mjs
+/runtime/app-lib.js
+/runtime/app-lib.mjs
 /runtime/server.js
 /runtime/server.mjs
 /.vscode/settings.json

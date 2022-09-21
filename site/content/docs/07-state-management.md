@@ -8,7 +8,7 @@ A component can retrieve the stores using the `stores` function:
 
 ```html
 <script>
-	import { stores } from '@sapper/app';
+	import { stores } from '@sapper/app-lib';
 	const { preloading, page, session } = stores();
 </script>
 ```

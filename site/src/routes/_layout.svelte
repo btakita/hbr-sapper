@@ -1,5 +1,5 @@
 <script>
-	import { stores } from '@sapper/app';
+	import { stores } from '@sapper/app-lib';
 	import { Icons, Icon, Nav, NavItem } from '@sveltejs/site-kit';
 
 	export let segment;

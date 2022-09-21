@@ -1,5 +1,5 @@
 <script>
-	import { goto } from '@sapper/app';
+	import { goto } from '@sapper/app-lib';
 
 	function preserveScroll() {
 		goto('/a-third-tall-page', { noscroll: true });

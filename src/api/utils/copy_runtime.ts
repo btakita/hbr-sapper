@@ -1,11 +1,11 @@
 import { readFile, writeFile } from 'fs/promises';
 import * as path from 'path';
 import { mkdirp } from './fs_utils.js';
-
 const runtime = await Promise.all(
 	[
 		'index.d.ts',
 		'app.js',
+		'app-lib.js',
 		'server.js',
 		'internal/shared.js',
 		'internal/layout.svelte',

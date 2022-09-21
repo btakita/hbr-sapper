@@ -9,6 +9,7 @@ import {
 import find_anchor from './find_anchor.js'
 import { Page, Query } from '@sapper/common'
 import { is_hash_routing_ } from '../baseuri_helper.js'
+export { find_anchor }
 export let uid = 1
 export function set_uid(n:number) {
 	uid = n

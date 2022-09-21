@@ -1,5 +1,5 @@
 <script>
-	import { stores } from '@sapper/app';
+	import { stores } from '@sapper/app-lib';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 

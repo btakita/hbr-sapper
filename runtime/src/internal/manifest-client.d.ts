@@ -26,8 +26,6 @@ export interface Route {
 	}>;
 }
 
-export const ErrorComponent: DOMComponentConstructor;
 export const components: DOMComponentLoader[];
 export const ignore: RegExp[];
-export const root_comp: { preload: Preload };
 export const routes: Route[];
