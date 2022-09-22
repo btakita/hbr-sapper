@@ -54,7 +54,10 @@ export function load_current_page():Promise<void> {
 		_history.replaceState({ id: uid }, '', href)
 		const target = select_target(new URL(location.href))
 		// Handle hash when hash-based routing
-		const { hash } = (is_hash_routing_(location) ? new URL(`${location.origin}${base_url}${location.hash.slice(1)}`) : location)
+		const { hash } =
+			is_hash_routing_(location)
+			? new URL(`${location.protocol}//${base_url}${location.hash.slice(1)}`)
+			: location
 		if (target) return navigate(target, uid, true, hash)
 	})
 }
@@ -158,7 +161,10 @@ function handle_click(event:MouseEvent) {
 		navigate(target, null, noscroll, url.hash)
 		event.preventDefault()
 		// Handle hash-based routing
-		const href = is_hash_routing_(url) ? `${url.origin}${url.pathname}${url.search}${url.hash}` : url.href
+		const href =
+			is_hash_routing_(url)
+			? `${url.protocol}//${url.pathname}${url.search}${url.hash}`
+			: url.href
 		_history.pushState({ id: cid }, '', href)
 	}
 }
