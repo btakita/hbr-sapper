@@ -6,7 +6,6 @@ export function get_base_uri(window_document:Document) {
 	}
 	return baseURI
 }
-const file_regex = /^file:\/\//
 export function is_hash_routing_(url:Location|URL):boolean {
-	return !!(file_regex.test(url.origin) || (typeof window !== 'undefined' && (window as any).cordova))
+	return !!(url.protocol === 'file:' || (typeof window !== 'undefined' && (window as any).cordova))
 }
