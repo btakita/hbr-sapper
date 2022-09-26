@@ -60,7 +60,7 @@
     "@types/cookie": "^0.5.1",
     "@types/mime": "^3.0.1",
     "@types/mocha": "^9.1.1",
-    "@types/node": "^18.7.20",
+    "@types/node": "^18.7.22",
     "@types/node-fetch": "^3.0.3",
     "@types/puppeteer": "^5.4.6",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
