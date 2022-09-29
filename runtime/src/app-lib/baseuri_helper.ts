@@ -7,5 +7,5 @@ export function get_base_uri(window_document:Document) {
 	return baseURI
 }
 export function is_hash_routing_(url:Location|URL):boolean {
-	return !!(url.protocol === 'file:' || (typeof window !== 'undefined' && (window as any).cordova))
+	return url.protocol === 'ionic:' || url.protocol === 'file:'
 }

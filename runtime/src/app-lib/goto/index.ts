@@ -10,7 +10,7 @@ export default function goto(
 	}
 	const url =
 		is_hash_routing_(location)
-		? new URL(`${location.protocol}//${base_url}#${href}`)
+		? new URL(`${location.protocol}//${location.hostname}${location.pathname}#${href}`)
 		: new URL(href, get_base_uri(document));
 	const target = select_target(url);
 
