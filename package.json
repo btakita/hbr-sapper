@@ -59,7 +59,7 @@
     "@sveltejs/eslint-config": "github:sveltejs/eslint-config#v5.4.0",
     "@types/cookie": "^0.5.1",
     "@types/mime": "^3.0.1",
-    "@types/mocha": "^9.1.1",
+    "@types/mocha": "^10.0.0",
     "@types/node": "^18.7.23",
     "@types/node-fetch": "^3.0.3",
     "@types/puppeteer": "^5.4.6",
@@ -85,7 +85,7 @@
     "svelte-loader": "^3.1.3",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
-    "typescript": "^4.8.3",
+    "typescript": "^4.8.4",
     "webpack": "^5.74.0",
     "webpack-modules": "^1.0.0"
   },
