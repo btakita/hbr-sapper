@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import * as cookie from 'cookie';
 const { parse } = cookie;
-import { devalue } from 'devalue';
+import { uneval } from 'devalue';
 import fetch from 'node-fetch';
 import URL from 'url';
 import { sourcemap_stacktrace } from './sourcemap_stacktrace';
@@ -415,7 +415,7 @@ function read_template(dir = build_dir) {
 
 function try_serialize(data: any, fail?: (err: Error) => void) {
 	try {
-		return devalue(data);
+		return uneval(data);
 	} catch (err) {
 		if (fail) fail(err);
 		return null;
