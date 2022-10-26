@@ -49,13 +49,10 @@ export default class RollupResult implements CompileResult {
 		};
 
 		this.summary = compiler.chunks.map(chunk => {
-			const size_color = chunk.code.length > 150000 ? colors.bold().red : chunk.code.length > 50000 ? colors.bold().yellow : colors.bold().white;
-			const size_label = left_pad(pb(chunk.code.length), 10);
-
-			const lines = [size_color(`${size_label} ${chunk.fileName}`)];
-
+			let renderedLength = 0
 			const deps = Object.keys(chunk.modules)
 				.map(file => {
+					renderedLength += chunk.modules[file].renderedLength
 					return {
 						file: path.relative(process.cwd(), file),
 						size: chunk.modules[file].renderedLength
@@ -63,6 +60,11 @@ export default class RollupResult implements CompileResult {
 				})
 				.filter(dep => dep.size > 0)
 				.sort((a, b) => b.size - a.size);
+
+			const size_color = renderedLength > 150000 ? colors.bold().red : renderedLength > 50000 ? colors.bold().yellow : colors.bold().white;
+			const size_label = left_pad(pb(renderedLength), 10);
+
+			const lines = [size_color(`${size_label} ${chunk.fileName}`)];
 
 			const total_unminified = deps.reduce((t, d) => t + d.size, 0);
 
