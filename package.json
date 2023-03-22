@@ -40,7 +40,7 @@
     "node-fetch": "^3.3.1",
     "port-authority": "^2.0.1",
     "pretty-bytes": "^6.1.0",
-    "rimraf": "^4.4.0",
+    "rimraf": "^4.4.1",
     "rollup-plugin-css-chunks": "^2.0.3",
     "sade": "1.8.1",
     "shimport": "^2.0.5",
