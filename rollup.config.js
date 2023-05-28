@@ -15,10 +15,10 @@ function template(kind, external) {
 		output: {
 			file: `runtime/${kind}.js`,
 			format: 'es',
+			inlineDynamicImports: true,
 			paths: id => id.replace('@sapper', '.')
 		},
 		external,
-		inlineDynamicImports: true,
 		plugins: [
 			resolve({
 				extensions: ['.mjs', '.js', '.ts', '.json']
