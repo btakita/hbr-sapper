@@ -1,21 +1,21 @@
-import * as path from 'path';
-import * as fs from 'fs';
-import * as http from 'http';
-import * as child_process from 'child_process';
-import * as ports from 'port-authority';
-import { EventEmitter } from 'events';
-import CheapWatch from 'cheap-watch';
-import { create_manifest_data, create_app, create_compilers, create_serviceworker_manifest } from '../core.js';
-import { Compiler, Compilers } from '../core/create_compilers/index.js';
-import { CompileResult } from '../core/create_compilers/interfaces.js';
-import Deferred from './utils/Deferred.js';
-import validate_bundler from './utils/validate_bundler.js';
-import { copy_shimport } from './utils/copy_shimport.js';
-import { ManifestData, FatalEvent, ErrorEvent, ReadyEvent, InvalidEvent } from '../interfaces.js';
-import { noop } from './utils/noop.js';
-import { copy_runtime } from './utils/copy_runtime.js';
-import { rimraf, mkdirp } from './utils/fs_utils.js';
-
+import { Timeout } from '@ctx-core/function'
+import CheapWatch from 'cheap-watch'
+import * as child_process from 'child_process'
+import { EventEmitter } from 'events'
+import * as fs from 'fs'
+import * as http from 'http'
+import * as path from 'path'
+import * as ports from 'port-authority'
+import { create_app, create_compilers, create_manifest_data, create_serviceworker_manifest } from '../core.js'
+import { Compiler, Compilers } from '../core/create_compilers/index.js'
+import { CompileResult } from '../core/create_compilers/interfaces.js'
+import { ErrorEvent, FatalEvent, InvalidEvent, ManifestData, ReadyEvent } from '../interfaces.js'
+import { copy_runtime } from './utils/copy_runtime.js'
+import { copy_shimport } from './utils/copy_shimport.js'
+import Deferred from './utils/Deferred.js'
+import { mkdirp, rimraf } from './utils/fs_utils.js'
+import { noop } from './utils/noop.js'
+import validate_bundler from './utils/validate_bundler.js'
 type Opts = {
 	cwd?: string;
 	src?: string;
@@ -438,7 +438,7 @@ const INTERVAL = 10000;
 
 class DevServer {
 	clients: Set<http.ServerResponse>;
-	interval: NodeJS.Timer;
+	interval: Timeout;
 	_: http.Server;
 
 	constructor(port: number, interval = 10000) {
