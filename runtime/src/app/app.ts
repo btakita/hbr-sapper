@@ -1,3 +1,4 @@
+import { Timeout } from '@ctx-core/function'
 import type { Branch, HydratedTarget, InitialData, Page, Redirect, Target } from '@sapper/app-lib'
 import {
 	extract_query,
@@ -8,7 +9,7 @@ import {
 	load_current_page,
 	select_target
 } from '@sapper/app-lib'
-import { type PageContext, type Preload } from '@sapper/common'
+import { type PageContext } from '@sapper/common'
 import App from '@sapper/internal/App.svelte'
 import { components } from '@sapper/internal/manifest-client.js'
 import { ErrorComponent, root_comp } from '@sapper/internal/app-manifest-client.js'
@@ -225,7 +226,7 @@ let prefetching:{
 	href:string;
 	promise:Promise<HydratedTarget>;
 } = null
-let mousemove_timeout:NodeJS.Timer
+let mousemove_timeout:Timeout
 export function start_prefetching() {
 	addEventListener('touchstart', trigger_prefetch)
 	addEventListener('mousemove', handle_mousemove)
