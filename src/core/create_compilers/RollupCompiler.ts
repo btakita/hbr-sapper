@@ -402,7 +402,9 @@ export default class RollupCompiler {
 	}
 
 	static async load_config(cwd: string) {
-		if (!rollup) rollup = relative('rollup', cwd);
+		// if (!rollup) rollup = relative('rollup', cwd);
+		// if (!rollup) rollup = await import(path.join(cwd, 'rollup'));
+		if (!rollup) rollup = await import('rollup');
 
 		let input: string, format: string, esm: boolean;
 		const config_extname = await get_config_extname(cwd);

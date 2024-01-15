@@ -20,7 +20,7 @@ const getModule = function(dir) {
   return root;
 };
 
-export const requireRelative = function(requested, relativeTo) {
+export const requireRelative = await function(requested, relativeTo) {
   const root = getModule(relativeTo);
   return root.require(requested);
 };
